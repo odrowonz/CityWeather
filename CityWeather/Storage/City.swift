@@ -9,7 +9,7 @@
 import UIKit
 
 /// Класс описывающий город
-public final class City: Codable, Equatable {
+struct City {
     /// Название города
     let name: String
     /// Широта города
@@ -18,6 +18,10 @@ public final class City: Codable, Equatable {
     let lon: Float
     /// Изображение города
     let image: String
+    /// Температура
+    var temp: Int?
+    /// Погодные условия
+    var condition: Condition?
     
     init(name: String, lat: Float, lon: Float, image: String) {
         self.name = name

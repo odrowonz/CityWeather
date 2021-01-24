@@ -8,8 +8,13 @@
 import UIKit
 import SnapKit
 
+protocol ViewOutput {
+    var onSelect: ((inout City) -> Void)? { get set }
+}
+
 class CityViewController: UIViewController, UISearchResultsUpdating, UITableViewDataSource, UITableViewDelegate {
     var filteredCities: [City] = []
+    private var output: ViewOutput
     
     // SearchBar fir filter
     lazy var searchController: UISearchController = {
@@ -34,13 +39,23 @@ class CityViewController: UIViewController, UISearchResultsUpdating, UITableView
         return tv
     }()
     
+    init(output: ViewOutput) {
+        self.output = output
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.view.backgroundColor = .green
         setupLayout()
         
-
+        updateSearchResults(for: searchController)
     }
     
     // MARK: Autolayout
@@ -54,9 +69,13 @@ class CityViewController: UIViewController, UISearchResultsUpdating, UITableView
 
     // MARK: Search Controller
     func filterContent(for searchText: String) {
-        filteredCities = AllCities.list.filter({ (city) -> Bool in
-            return city.name.localizedCaseInsensitiveContains(searchText)
-        })
+        filteredCities = Array(AllCities.list.filter({ (city) -> Bool in
+            return searchText == "" ? true : city.name.localizedCaseInsensitiveContains(searchText)
+        }).prefix(10))
+        
+        for var city in filteredCities {
+            self.output.onSelect!(&city)
+        }
     }
 
     func updateSearchResults(for searchController: UISearchController) {
@@ -68,15 +87,14 @@ class CityViewController: UIViewController, UISearchResultsUpdating, UITableView
     
     // MARK: UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let cnt = searchController.isActive ? filteredCities.count : AllCities.list.count
-        return cnt < 10 ? cnt : 10
+        return filteredCities.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: CityTableViewCell.self), for: indexPath) as? CityTableViewCell
         else { return UITableViewCell() }
 
-        cell.city = (searchController.isActive) ? filteredCities[indexPath.row] : AllCities.list[indexPath.row]
+        cell.city = filteredCities[indexPath.row]
 
         return cell
 
