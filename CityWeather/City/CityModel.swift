@@ -18,23 +18,21 @@ class CityModel: ModelCityOutput {
     
     private init() {}
     
-    func onSelectParameter(city: inout City) {
+    func onSelectParameter(city: City, saving: @escaping (whatToDoWithCityWeather))  {
         sendRequest(CityModel.baseUrl,
                     method: "GET",
                     parameters: ["lat": String(format: "%.2f", city.lat),
                                  "lon": String(format: "%.2f", city.lon)],
-                    headers: CityModel.auth) { responseObject, error in
-            guard let responseObject = responseObject, error == nil else {
-                print(error ?? "Unknown error")
-                return
-            }
-            
-            // temperature and current weather conditions
-            if let fact = responseObject["fact"] as? Dictionary<String, Any> {
-                city.temp = fact["temp"] as? Int
-                
-                if let condString = fact["condition"] as? String {
-                    city.condition = Condition(rawValue: condString)
+                    headers: CityModel.auth) {
+            responseObject, error in
+            if (error == nil) {
+                // temperature and current weather conditions
+                if let responseObject = responseObject,
+                   let fact = responseObject["fact"] as? Dictionary<String, Any>,
+                   let tempVal = fact["temp"] as? Int,
+                   let condString = fact["condition"] as? String,
+                   let condVal = Condition(rawValue: condString) {
+                    saving(tempVal, condVal)
                 }
             }
         }

@@ -7,15 +7,12 @@
 
 import Foundation
 
-protocol ModelCityOutput {
-    func onSelectParameter(city: inout City)
-}
-
 class CityViewModel: ViewOutput {
     // интерфейс CityViewModel -> CityModel
-    private var model: ModelCityOutput = CityModel.shared
-    
-    lazy var onSelect: ((inout City) -> Void)? = { (city: inout City) in
-        self.model.onSelectParameter(city: &city)
+    static var model: ModelCityOutput = CityModel.shared
+
+    var onSelect: ((City, @escaping (whatToDoWithCityWeather)) -> Void)? = {
+        (city, whatToDo) -> Void in
+        CityViewModel.model.onSelectParameter(city: city, saving: whatToDo)
     }
 }

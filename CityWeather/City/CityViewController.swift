@@ -8,9 +8,7 @@
 import UIKit
 import SnapKit
 
-protocol ViewOutput {
-    var onSelect: ((inout City) -> Void)? { get set }
-}
+typealias whatToDoWithCityWeather = (Int, Condition) -> Void
 
 class CityViewController: UIViewController, UISearchResultsUpdating, UITableViewDataSource, UITableViewDelegate {
     var filteredCities: [City] = []
@@ -74,7 +72,12 @@ class CityViewController: UIViewController, UISearchResultsUpdating, UITableView
         }).prefix(10))
         
         for var city in filteredCities {
-            self.output.onSelect!(&city)
+            if let method = self.output.onSelect {
+                method(city) { (temp, condition) in
+                    city.temp = temp
+                    city.condition = condition
+                }
+            }
         }
     }
 
@@ -98,6 +101,10 @@ class CityViewController: UIViewController, UISearchResultsUpdating, UITableView
 
         return cell
 
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
     }
 }
 
