@@ -8,5 +8,5 @@
 import Foundation
 
 protocol ModelCityOutput {
-    func onSelectParameter(city: City, saving: @escaping (whatToDoWithCityWeather)) 
+    func onSelectParameter(lat: Float, lon: Float, saving: @escaping (WhatToDoWithWeather)) 
 }

@@ -17,19 +17,19 @@ class CityTableViewCell: UITableViewCell {
                 cityName.text = city.name
                 
                 if let cond = city.condition {
-                    cityCond.text = cond.rawValue
+                    cityCond.text = cond.getTextRU()
                 } else {
-                    cityCond.text = "Пасмурно"
+                    cityCond.text = ""
                 }
                 
                 if let temp = city.temp {
                     if temp > 0 {
                         cityTemp.text = "+" + String(temp) + "°C"
                     } else if temp < 0 {
-                        cityTemp.text = "-" + String(temp) + "°C"
+                        cityTemp.text = String(temp) + "°C"
                     } else { cityTemp.text = "0°C" }
                 } else {
-                    cityTemp.text = "+10°C"
+                    cityTemp.text = ""
                 }
             }
         }

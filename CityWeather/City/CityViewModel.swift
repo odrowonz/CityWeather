@@ -11,8 +11,8 @@ class CityViewModel: ViewOutput {
     // интерфейс CityViewModel -> CityModel
     static var model: ModelCityOutput = CityModel.shared
 
-    var onSelect: ((City, @escaping (whatToDoWithCityWeather)) -> Void)? = {
-        (city, whatToDo) -> Void in
-        CityViewModel.model.onSelectParameter(city: city, saving: whatToDo)
+    var onSelect: ((Float, Float, @escaping (WhatToDoWithWeather)) -> Void)? = {
+        (lat, lon, whatToDo) -> Void in
+        CityViewModel.model.onSelectParameter(lat: lat, lon: lon, saving: whatToDo)
     }
 }

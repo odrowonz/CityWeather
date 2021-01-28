@@ -18,11 +18,11 @@ class CityModel: ModelCityOutput {
     
     private init() {}
     
-    func onSelectParameter(city: City, saving: @escaping (whatToDoWithCityWeather))  {
+    func onSelectParameter(lat: Float, lon: Float, saving: @escaping (WhatToDoWithWeather))  {
         sendRequest(CityModel.baseUrl,
                     method: "GET",
-                    parameters: ["lat": String(format: "%.2f", city.lat),
-                                 "lon": String(format: "%.2f", city.lon)],
+                    parameters: ["lat": String(format: "%.2f", lat),
+                                 "lon": String(format: "%.2f", lon)],
                     headers: CityModel.auth) {
             responseObject, error in
             if (error == nil) {

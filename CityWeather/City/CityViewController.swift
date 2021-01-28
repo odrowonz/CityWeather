@@ -8,10 +8,15 @@
 import UIKit
 import SnapKit
 
-typealias whatToDoWithCityWeather = (Int, Condition) -> Void
-
 class CityViewController: UIViewController, UISearchResultsUpdating, UITableViewDataSource, UITableViewDelegate {
-    var filteredCities: [City] = []
+    var filteredCities: [City] = [] {
+        didSet {
+          DispatchQueue.main.async {
+            self.tableView.reloadData()
+          }
+        }
+      }
+    
     private var output: ViewOutput
     
     // SearchBar fir filter
@@ -71,11 +76,18 @@ class CityViewController: UIViewController, UISearchResultsUpdating, UITableView
             return searchText == "" ? true : city.name.localizedCaseInsensitiveContains(searchText)
         }).prefix(10))
         
-        for var city in filteredCities {
-            if let method = self.output.onSelect {
-                method(city) { (temp, condition) in
-                    city.temp = temp
-                    city.condition = condition
+        if let method = self.output.onSelect,
+           filteredCities.count > 0 {
+            for i in 0...(filteredCities.count-1) {
+                let cityName = filteredCities[i].name
+                method(filteredCities[i].lat, filteredCities[i].lon) { [self] (temp, condition) in
+                    if let index = filteredCities.firstIndex(where: { $0.name == cityName}) {
+                        self.filteredCities[index].temp = temp
+                    }
+                    if let index = filteredCities.firstIndex(where: { $0.name == cityName}) {
+                        self.filteredCities[index].condition = condition
+                    }
+                    
                 }
             }
         }

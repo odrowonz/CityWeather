@@ -8,5 +8,5 @@
 import Foundation
 
 protocol ViewOutput {
-    var onSelect: ((City, @escaping (whatToDoWithCityWeather)) -> Void)? { get set }
+    var onSelect: ((Float, Float, @escaping (WhatToDoWithWeather)) -> Void)? { get set }
 }
