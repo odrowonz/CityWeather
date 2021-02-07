@@ -10,8 +10,10 @@ import UIKit
 
 /// Класс описывающий город
 struct City {
+    /// Название города (английский)
+    let nameEN: String
     /// Название города
-    let name: String
+    let nameRU: String
     /// Широта города
     let lat: Float
     /// Долгота города
@@ -23,18 +25,19 @@ struct City {
     /// Погодные условия
     var condition: Condition?
     
-    init(name: String, lat: Float, lon: Float, image: String) {
-        self.name = name
+    init(nameEN: String, nameRU: String, lat: Float, lon: Float, image: String) {
+        self.nameEN = nameEN
+        self.nameRU = nameRU
         self.lat = lat
         self.lon = lon
         self.image = image
     }
     
     public static func == (lhs: City, rhs: City) -> Bool {
-        return lhs.name == rhs.name
+        return lhs.nameEN == rhs.nameEN
     }
     
     public static func != (lhs: City, rhs: City) -> Bool {
-        return lhs.name != rhs.name
+        return lhs.nameEN != rhs.nameEN
     }
 }

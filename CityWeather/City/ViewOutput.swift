@@ -9,4 +9,6 @@ import Foundation
 
 protocol ViewOutput {
     var onSelect: ((Float, Float, @escaping (WhatToDoWithWeather)) -> Void)? { get set }
+    func getWeather(whatToDoWithCity: @escaping (WhatToDoWithCity), whatToDoAtTheEnd: @escaping (()->Void))
+    func filterContent(for searchText: String, whatToDoAtTheEnd: @escaping (WhatToDoWithCities))
 }

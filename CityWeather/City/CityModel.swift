@@ -9,7 +9,7 @@ import Foundation
 
 class CityModel: ModelCityOutput {
     static let baseUrl = "https://api.weather.yandex.ru/v2/forecast"
-    static let auth = ["8816747c-6c5e-4dff-a92c-175de40338a3": "X-Yandex-API-Key"]
+    static let auth = ["f93c0971-a578-457a-90b3-19e758fd0215": "X-Yandex-API-Key"]
     
     static var shared: CityModel = {
             let instance = CityModel()
@@ -22,7 +22,8 @@ class CityModel: ModelCityOutput {
         sendRequest(CityModel.baseUrl,
                     method: "GET",
                     parameters: ["lat": String(format: "%.2f", lat),
-                                 "lon": String(format: "%.2f", lon)],
+                                 "lon": String(format: "%.2f", lon),
+                                 "lang": "en_US"],
                     headers: CityModel.auth) {
             responseObject, error in
             if (error == nil) {

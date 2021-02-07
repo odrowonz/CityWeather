@@ -1,4 +1,5 @@
 import UIKit
+import CoreLocation
 import PlaygroundSupport
  
 PlaygroundPage.current.needsIndefiniteExecution = true
@@ -47,7 +48,7 @@ let conditionRU: [String: String] = [
     "thunderstorm-with-hail": "гроза с градом"
 ]
 
-func getClassName(obj : AnyObject) -> String
+/*func getClassName(obj : AnyObject) -> String
 {
     let objectClass : AnyClass! = object_getClass(obj)
     let className = objectClass.description()
@@ -87,9 +88,15 @@ func sendRequest(_ url: String,
         completion(responseObject, nil)
     }
     task.resume()
+}*/
+
+func getCoordinateFrom(city: String, completion: @escaping(_ coordinate: CLLocationCoordinate2D?, _ error: Error?) -> () ) {
+  CLGeocoder().geocodeAddressString(city) { (placemark, error) in
+    completion(placemark?.first?.location?.coordinate, error)
+  }
 }
 
-sendRequest("https://api.weather.yandex.ru/v2/forecast",
+/*sendRequest("https://api.weather.yandex.ru/v2/forecast",
             method: "GET",
             parameters: ["lat": "55.75", "lon": "37.62"],
             headers: ["8816747c-6c5e-4dff-a92c-175de40338a3": "X-Yandex-API-Key"]) { responseObject, error in
@@ -110,5 +117,17 @@ sendRequest("https://api.weather.yandex.ru/v2/forecast",
             print(condString)
             print(condType)
         }
+    }
+}*/
+
+getCoordinateFrom(city: "Лехтуси") {coordinate, error in
+    if let error = error {
+        print(error)
+    }
+    
+    if let coordinate = coordinate {
+        print("latitude=" + String(coordinate.latitude) +
+             " longitude=" + String(coordinate.longitude))
+        print(String(coordinate.latitude) + ", " + String(coordinate.longitude))
     }
 }

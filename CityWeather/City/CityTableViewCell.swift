@@ -14,10 +14,10 @@ class CityTableViewCell: UITableViewCell {
     public var city: City? {
         didSet {
             if let city = city {
-                cityName.text = city.name
+                cityName.text = city.nameEN
                 
                 if let cond = city.condition {
-                    cityCond.text = cond.getTextRU()
+                    cityCond.text = cond.getTextEN()
                 } else {
                     cityCond.text = ""
                 }
@@ -35,7 +35,7 @@ class CityTableViewCell: UITableViewCell {
         }
     }
     
-    lazy var cityName: UILabel = {
+    private lazy var cityName: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
@@ -45,7 +45,7 @@ class CityTableViewCell: UITableViewCell {
         return label
     }()
     
-    lazy var cityTemp: UILabel = {
+    private lazy var cityTemp: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 28, weight: .bold)
@@ -55,7 +55,7 @@ class CityTableViewCell: UITableViewCell {
         return label
     }()
     
-    lazy var cityCond: UILabel = {
+    private lazy var cityCond: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 14, weight: .regular)

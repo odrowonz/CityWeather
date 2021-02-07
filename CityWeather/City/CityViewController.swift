@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 class CityViewController: UIViewController, UISearchResultsUpdating, UITableViewDataSource, UITableViewDelegate {
-    var filteredCities: [City] = [] {
+    var filteredCities: [City] = Array(AllCities.list.prefix(10)) {
         didSet {
           DispatchQueue.main.async {
             self.tableView.reloadData()
@@ -58,7 +58,19 @@ class CityViewController: UIViewController, UISearchResultsUpdating, UITableView
         self.view.backgroundColor = .green
         setupLayout()
         
-        updateSearchResults(for: searchController)
+        output.getWeather(whatToDoWithCity: {
+            [weak self] city in
+            guard let self = self else { return }
+            
+            if let index = self.filteredCities.firstIndex(where: { $0.nameEN == city.nameEN}) {
+                self.filteredCities[index].temp = city.temp
+                self.filteredCities[index].condition = city.condition
+            }
+        },  whatToDoAtTheEnd: {
+            [weak self] in
+            guard let self = self else { return }
+            self.tableView.reloadData()
+        })
     }
     
     // MARK: Autolayout
@@ -71,32 +83,13 @@ class CityViewController: UIViewController, UISearchResultsUpdating, UITableView
     }
 
     // MARK: Search Controller
-    func filterContent(for searchText: String) {
-        filteredCities = Array(AllCities.list.filter({ (city) -> Bool in
-            return searchText == "" ? true : city.name.localizedCaseInsensitiveContains(searchText)
-        }).prefix(10))
-        
-        if let method = self.output.onSelect,
-           filteredCities.count > 0 {
-            for i in 0...(filteredCities.count-1) {
-                let cityName = filteredCities[i].name
-                method(filteredCities[i].lat, filteredCities[i].lon) { [self] (temp, condition) in
-                    if let index = filteredCities.firstIndex(where: { $0.name == cityName}) {
-                        self.filteredCities[index].temp = temp
-                    }
-                    if let index = filteredCities.firstIndex(where: { $0.name == cityName}) {
-                        self.filteredCities[index].condition = condition
-                    }
-                    
-                }
-            }
-        }
-    }
-
     func updateSearchResults(for searchController: UISearchController) {
         if let searchText = searchController.searchBar.text {
-            filterContent(for: searchText)
-            tableView.reloadData()
+            output.filterContent(for: searchText) {
+                cities in
+                self.filteredCities = cities
+            }
+            //tableView.reloadData()
         }
     }
     

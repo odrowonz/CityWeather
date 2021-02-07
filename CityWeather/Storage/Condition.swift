@@ -28,6 +28,31 @@ enum Condition: String {
     case thunderstormWithRain = "thunderstorm-with-rain" // "дождь с грозой"
     case thunderstormWithHail = "thunderstorm-with-hail" // "гроза с градом"
     
+    
+    func getTextEN() -> String {
+        switch self {
+        case .clear: return "Clear"
+        case .partlyCloudy: return "Partly сloudy"
+        case .cloudy: return "Cloudy"
+        case .overcast: return "Overcast"
+        case .drizzle: return "Drizzle"
+        case .lightRain: return "Light rain"
+        case .rain: return "Rain"
+        case .moderateRain: return "Moderately heavy rain"
+        case .heavyRain: return "Heavy rain"
+        case .continuousHeavyRain: return "Continuous heavy rain"
+        case .showers: return "Showers"
+        case .wetSnow: return "Wet snow"
+        case .lightSnow: return "Light snow"
+        case .snow: return "Snow"
+        case .snowShowers: return "Snowfall"
+        case .hail: return "Hailstorm"
+        case .thunderstorm: return "Thunderstorm"
+        case .thunderstormWithRain: return "Thunderstorm with rain"
+        case .thunderstormWithHail: return "Thunderstorm with hail"
+        }
+    }
+    
     func getTextRU() -> String {
         switch self {
         case .clear: return "ясно"
