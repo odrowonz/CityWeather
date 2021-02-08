@@ -17,6 +17,14 @@ class CityViewController: UIViewController, UISearchResultsUpdating, UITableView
         }
       }
     
+    var countDownSec: Int = 60 {
+        didSet {
+          DispatchQueue.main.async {
+            self.tableView.reloadData()
+          }
+        }
+    }
+    
     private var output: ViewOutput
     
     // SearchBar fir filter
@@ -55,23 +63,24 @@ class CityViewController: UIViewController, UISearchResultsUpdating, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = .green
+        self.view.backgroundColor = .white
         setupLayout()
         
-        
-        output.getWeather(whatToDoWithCity: {
-            [weak self] city in
-            guard let self = self else { return }
-            
-            if let index = self.filteredCities.firstIndex(where: { $0.nameEN == city.nameEN}) {
-                self.filteredCities[index].temp = city.temp
-                self.filteredCities[index].condition = city.condition
-            }
-        },  whatToDoAtTheEnd: {
-            [weak self] in
-            guard let self = self else { return }
-            self.tableView.reloadData()
-        })
+        let timer = Timer.scheduledTimer(withTimeInterval: 600, repeats: true) {
+            timer in
+            print(Date())
+            self.output.getWeather(whatToDoWithCity: {
+                [weak self] city in
+                guard let self = self else { return }
+                
+                if let index = self.filteredCities.firstIndex(where: { $0.nameEN == city.nameEN}) {
+                    self.filteredCities[index].temp = city.temp
+                    self.filteredCities[index].condition = city.condition
+                }
+            },  whatToDoAtTheEnd: {})
+        }
+        timer.fire()
+        countDownSec = 60
     }
     
     // MARK: Autolayout

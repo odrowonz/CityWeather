@@ -17,6 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // do only pure app launch stuff, not interface stuff
         } else {
             self.window = UIWindow()
+            window?.overrideUserInterfaceStyle = .light
             let vm = CityViewModel()
             let vc = CityViewController(output: vm)
             self.window?.rootViewController = vc

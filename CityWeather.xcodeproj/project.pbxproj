@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		C01710536562EEFFD6218BD5 /* Pods_CityWeather.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 591398859E2B086DAEA4E41F /* Pods_CityWeather.framework */; };
+		DB2F5D4425D1415C008437A1 /* Города.txt in Resources */ = {isa = PBXBuildFile; fileRef = DB2F5D4325D1415C008437A1 /* Города.txt */; };
 		DB4F2B0F25BC82B7006C2D4B /* CityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4F2B0E25BC82B7006C2D4B /* CityViewModel.swift */; };
 		DB4F2B1325BD75EB006C2D4B /* Condition.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4F2B1225BD75EB006C2D4B /* Condition.swift */; };
 		DB4F2B1625BDF588006C2D4B /* ModelCityOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4F2B1525BDF588006C2D4B /* ModelCityOutput.swift */; };
@@ -29,6 +30,7 @@
 /* Begin PBXFileReference section */
 		591398859E2B086DAEA4E41F /* Pods_CityWeather.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CityWeather.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C44BAFDEC800866F5F85A3C4 /* Pods-CityWeather.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CityWeather.release.xcconfig"; path = "Target Support Files/Pods-CityWeather/Pods-CityWeather.release.xcconfig"; sourceTree = "<group>"; };
+		DB2F5D4325D1415C008437A1 /* Города.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Города.txt"; sourceTree = "<group>"; };
 		DB4F2B0E25BC82B7006C2D4B /* CityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityViewModel.swift; sourceTree = "<group>"; };
 		DB4F2B1225BD75EB006C2D4B /* Condition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Condition.swift; sourceTree = "<group>"; };
 		DB4F2B1525BDF588006C2D4B /* ModelCityOutput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelCityOutput.swift; sourceTree = "<group>"; };
@@ -105,6 +107,7 @@
 		DBF66A3525B4DE350066FF43 /* Storage */ = {
 			isa = PBXGroup;
 			children = (
+				DB2F5D4325D1415C008437A1 /* Города.txt */,
 				DBF66A3A25B4DF4B0066FF43 /* City.swift */,
 				DBF66A3725B4DEB90066FF43 /* AllCities.swift */,
 				DB4F2B1225BD75EB006C2D4B /* Condition.swift */,
@@ -198,6 +201,7 @@
 			files = (
 				DBE8094825B4BE9D00F8BA1A /* LaunchScreen.storyboard in Resources */,
 				DBE8094525B4BE9D00F8BA1A /* Assets.xcassets in Resources */,
+				DB2F5D4425D1415C008437A1 /* Города.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
