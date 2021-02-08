@@ -19,7 +19,7 @@ class CityViewModel: ViewOutput {
     }
     
     func getWeather(whatToDoWithCity: @escaping (WhatToDoWithCity), whatToDoAtTheEnd: @escaping (()->Void)) {
-        allCities.map({
+        let _ = allCities.map({
             if let method = self.onSelect,
                allCities.count > 0 {
                 let cityName = $0.nameEN

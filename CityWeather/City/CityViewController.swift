@@ -58,6 +58,7 @@ class CityViewController: UIViewController, UISearchResultsUpdating, UITableView
         self.view.backgroundColor = .green
         setupLayout()
         
+        
         output.getWeather(whatToDoWithCity: {
             [weak self] city in
             guard let self = self else { return }
