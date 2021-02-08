@@ -9,6 +9,8 @@ import UIKit
 import SnapKit
 
 class CityViewController: UIViewController, UISearchResultsUpdating, UITableViewDataSource, UITableViewDelegate {
+    static let updateInterval = 60
+        
     var filteredCities: [City] = Array(AllCities.list.prefix(10)) {
         didSet {
           DispatchQueue.main.async {
@@ -17,10 +19,10 @@ class CityViewController: UIViewController, UISearchResultsUpdating, UITableView
         }
       }
     
-    var countDownSec: Int = 60 {
+    var countdownSec: Int = CityViewController.updateInterval {
         didSet {
           DispatchQueue.main.async {
-            self.tableView.reloadData()
+            self.countdownLabel.text = "\(self.countdownSec) seconds left until weather information is updated..."
           }
         }
     }
@@ -50,6 +52,16 @@ class CityViewController: UIViewController, UISearchResultsUpdating, UITableView
         return tv
     }()
     
+    lazy var countdownLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
+        label.textColor = .black
+        label.numberOfLines = 2
+        label.textAlignment = .center
+        return label
+    }()
+    
     init(output: ViewOutput) {
         self.output = output
         super.init(nibName: nil, bundle: nil)
@@ -66,9 +78,11 @@ class CityViewController: UIViewController, UISearchResultsUpdating, UITableView
         self.view.backgroundColor = .white
         setupLayout()
         
-        let timer = Timer.scheduledTimer(withTimeInterval: 600, repeats: true) {
-            timer in
-            print(Date())
+        // Update timer
+        let timer = Timer.scheduledTimer(withTimeInterval: TimeInterval(CityViewController.updateInterval), repeats: true) {
+            [weak self] timer in
+            guard let self = self else { return }
+            
             self.output.getWeather(whatToDoWithCity: {
                 [weak self] city in
                 guard let self = self else { return }
@@ -78,17 +92,41 @@ class CityViewController: UIViewController, UISearchResultsUpdating, UITableView
                     self.filteredCities[index].condition = city.condition
                 }
             },  whatToDoAtTheEnd: {})
+            
+            self.countdownSec = CityViewController.updateInterval
+            
+            self.tableView.reloadData()
         }
         timer.fire()
-        countDownSec = 60
+        
+        // Countdown timer
+        let countdownTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) {
+            [weak self] timer in
+            guard let self = self else { return }
+            
+            if self.countdownSec > 0 {
+                self.countdownSec = self.countdownSec - 1
+            }
+        }
+        countdownTimer.fire()
     }
     
     // MARK: Autolayout
     func setupLayout() {
+        view.addSubview(countdownLabel)
         view.addSubview(tableView)
         
+        countdownLabel.snp.makeConstraints { (make) -> Void in
+            make.bottom.equalTo(view)
+            make.left.equalTo(view)
+            make.right.equalTo(view)
+        }
+        
         tableView.snp.makeConstraints { (make) -> Void in
-            make.edges.equalTo(view).inset(UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.left.equalTo(view)
+            make.right.equalTo(view)
+            make.bottom.equalTo(countdownLabel.snp.top)
         }
     }
 
