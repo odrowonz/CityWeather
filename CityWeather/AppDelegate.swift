@@ -17,7 +17,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // do only pure app launch stuff, not interface stuff
         } else {
             self.window = UIWindow()
-            let vc = CityViewController()
+            let vm = CityViewModel()
+            let vc = CityViewController(output: vm)
             self.window?.rootViewController = vc
             self.window?.makeKeyAndVisible()
             self.window?.backgroundColor = .red
