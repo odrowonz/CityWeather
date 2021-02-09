@@ -97,6 +97,10 @@ class CityViewController: UIViewController, UISearchResultsUpdating, UITableView
             
             self.tableView.reloadData()
         }
+        
+        // don't skip the timer iteration if the user is interacting with the interface
+        RunLoop.current.add(timer, forMode: .common)
+        
         timer.fire()
         
         // Countdown timer

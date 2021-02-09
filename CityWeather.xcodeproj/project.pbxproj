@@ -31,6 +31,7 @@
 		591398859E2B086DAEA4E41F /* Pods_CityWeather.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CityWeather.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C44BAFDEC800866F5F85A3C4 /* Pods-CityWeather.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CityWeather.release.xcconfig"; path = "Target Support Files/Pods-CityWeather/Pods-CityWeather.release.xcconfig"; sourceTree = "<group>"; };
 		DB2F5D4325D1415C008437A1 /* Города.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Города.txt"; sourceTree = "<group>"; };
+		DB2F5D4825D28C67008437A1 /* CityWeatherRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CityWeatherRelease.entitlements; sourceTree = "<group>"; };
 		DB4F2B0E25BC82B7006C2D4B /* CityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityViewModel.swift; sourceTree = "<group>"; };
 		DB4F2B1225BD75EB006C2D4B /* Condition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Condition.swift; sourceTree = "<group>"; };
 		DB4F2B1525BDF588006C2D4B /* ModelCityOutput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelCityOutput.swift; sourceTree = "<group>"; };
@@ -93,6 +94,7 @@
 		DBE8093A25B4BE9C00F8BA1A /* CityWeather */ = {
 			isa = PBXGroup;
 			children = (
+				DB2F5D4825D28C67008437A1 /* CityWeatherRelease.entitlements */,
 				DBF66A3525B4DE350066FF43 /* Storage */,
 				DBF66A4425B4EAE10066FF43 /* City */,
 				DBE8093B25B4BE9C00F8BA1A /* AppDelegate.swift */,
@@ -428,6 +430,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = CityWeather/CityWeatherRelease.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = P9HJX3XLEA;
 				INFOPLIST_FILE = CityWeather/Info.plist;
